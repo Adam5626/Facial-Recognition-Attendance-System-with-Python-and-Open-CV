@@ -32,7 +32,7 @@ def FacialRecognition():
     
     sheet.set_index("Reg No")
 
-    URL = "http://192.168.137.130:8080/shot.jpg"
+    URL = "http://10.1.142.112:8080/shot.jpg"
     path = 'AttendanceImages'
 
     images = []
@@ -68,7 +68,7 @@ def FacialRecognition():
 
             matchIndex = np.argmin(faceDis)
 
-            if matches[matchIndex]:
+            if matches[matchIndex] and faceDis[matchIndex]<0.5:
                 name = ClassNames[matchIndex].upper()
 
                 for i in range(45):
@@ -88,6 +88,6 @@ def FacialRecognition():
         key = cv2.waitKey(1)
         if(key == 27):
             os.remove("Sheet.csv")
-            sheet.to_csv("Sheet.csv")
+            sheet.to_csv("Sheet.csv",index=False)
 
             break
